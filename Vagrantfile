@@ -91,8 +91,8 @@ Vagrant.configure("2") do |config|
     # Install AWS CLI
     #
     sudo pip3 install awscli
-    sudo su - vagrant -c "aws configure set aws_access_key_id AKIATRX33OH62K2YQEOB"
-    sudo su - vagrant -c "aws configure set aws_secret_access_key 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"
+    sudo su - vagrant -c "aws configure set aws_access_key_id default_access_key"
+    sudo su - vagrant -c "aws configure set aws_secret_access_key default_secret_key"
     sudo su - vagrant -c "aws configure set default.region eu-west-2"
     #
     # Install Kubectl
