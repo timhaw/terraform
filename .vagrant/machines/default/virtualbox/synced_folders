@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/skaffold-demo":{"guestpath":"/home/vagrant/skaffold-demo","hostpath":"/Users/timhaw/Dropbox/Knowledge Nuggets/Kubernetes Tutorial/kubernetes-course/skaffold-demo","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/timhaw/Source/Repos/Docker_Jenkins_Ansible","disabled":false,"__vagrantfile":true}}}

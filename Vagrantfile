@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-    config.vm.provision "shell", env: {"AWS_ACCESS_KEY" => $aws_access_key_id, "AWS_SECRET_KEY" => $aws_secret_access_key}, inline: <<-SHELL
+    config.vm.provision "shell", inline: <<-SHELL
     apt-get update &> /dev/null
     # apt-get install -y apache2
     #
@@ -100,9 +100,9 @@ Vagrant.configure("2") do |config|
     # Install AWS CLI
     #
     sudo pip3 install awscli
-    sudo su - vagrant -c 'aws configure set aws_access_key_id $AWS_ACCESS_KEY'
-    sudo su - vagrant -c 'aws configure set aws_secret_access_key $AWS_SECRET_KEY'
-    sudo su - vagrant -c 'aws configure set default.region eu-west-2'
+    sudo su - vagrant -c "aws configure set aws_access_key_id #{ENV['aws_access_key_id']}"
+    sudo su - vagrant -c "aws configure set aws_secret_access_key #{ENV['aws_secret_access_key']}"
+    sudo su - vagrant -c "aws configure set default.region eu-west-2"
     #
     # Install Kubectl
     #
