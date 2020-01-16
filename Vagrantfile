@@ -7,6 +7,9 @@ system("
         eval $(sed 's/[[:space:]]*=[[:space:]]\s*/=/g' credentials | \
           grep -v '\[default\]' | \
           sed 's/^/export /')
+        echo 'AWS_ACCESS_KEY = \"'$aws_access_key_id'\"' > terraform.tfvars
+        echo 'AWS_SECRET_KEY = \"'$aws_secret_access_key'\"' >> terraform.tfvars
+        export VAGRANT_HOME=`pwd`
     fi
 ")
 
@@ -54,8 +57,9 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
   # config.vm.synced_folder "/Users/timhaw/Dropbox/Source/Repos", "/Repos"
-  config.vm.synced_folder "/Users/timhaw/Dropbox/Knowledge\ Nuggets/Kubernetes\ Tutorial/kubernetes-course/skaffold-demo", "/home/vagrant/skaffold-demo"
-
+  config.vm.synced_folder "#{ENV['VAGRANT_HOME']}", "/var/terraform_home/", type: "rsync",
+  rsync__exclude: [".git*", "credentials*", "Terraform.code-workspace", "*.log", "Vagrantfile"]
+  
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -84,6 +88,7 @@ Vagrant.configure("2") do |config|
     wget -q https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip
     unzip terraform_0.12.19_linux_amd64.zip
     mv terraform /usr/local/bin/
+    rm -f terraform_0.12.19_linux_amd64.zip
     #
     # Install Kops
     #
