@@ -2,17 +2,14 @@
 # vi: set ft=ruby :
 
 system("
-    if [ #{ARGV[0]} = 'up' ]; then
-        git secret reveal -f
-        eval $(sed 's/[[:space:]]*=[[:space:]]\s*/=/g' credentials | \
-          grep -v '\[default\]' | \
-          sed 's/^/export /')
-        echo 'AWS_ACCESS_KEY = \"'$aws_access_key_id'\"' > terraform.tfvars
-        echo 'AWS_SECRET_KEY = \"'$aws_secret_access_key'\"' >> terraform.tfvars
-        export VAGRANT_HOME=`pwd`
-    fi
+  if [ #{ARGV[0]} = 'up' ]; then
+    git secret reveal -f
+    eval $(sed 's/[[:space:]]*=[[:space:]]\s*/=/g' credentials | grep -v '\\[default\\]' | sed 's/^/export /')
+    echo 'AWS_ACCESS_KEY = \"'$aws_access_key_id'\"' > terraform.tfvars
+    echo 'AWS_SECRET_KEY = \"'$aws_secret_access_key'\"' >> terraform.tfvars
+    export VAGRANT_HOME=`pwd`
+  fi
 ")
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -78,7 +75,11 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-    config.vm.provision "shell", inline: <<-SHELL
+#=begin
+  config.vm.provision "shell", inline: <<-SHELL
+  eval $(sed 's/[[:space:]]*=[[:space:]]\s*/=/g' /var/terraform_home/terraform.tfvars | sed 's/^/export /')
+  printenv > environment.txt
+#<<COMMENT  
     apt-get update &> /dev/null
     # apt-get install -y apache2
     #
@@ -105,9 +106,9 @@ Vagrant.configure("2") do |config|
     # Install AWS CLI
     #
     sudo pip3 install awscli
-    sudo su - vagrant -c "aws configure set aws_access_key_id #{ENV['aws_access_key_id']}"
-    sudo su - vagrant -c "aws configure set aws_secret_access_key #{ENV['aws_secret_access_key']}"
-    sudo su - vagrant -c "aws configure set default.region eu-west-2"
+    sudo su - vagrant bash -c "aws configure set aws_access_key_id $AWS_ACCESS_KEY"
+    sudo su - vagrant bash -c "aws configure set aws_secret_access_key $AWS_SECRET_KEY"
+    sudo su - vagrant bash -c "aws configure set default.region eu-west-2"
     #
     # Install Kubectl
     #
@@ -134,5 +135,7 @@ Vagrant.configure("2") do |config|
     chmod +x skaffold-linux-amd64
     mv skaffold-linux-amd64 /usr/local/bin/skaffold
     #
+#COMMENT
   SHELL
+#=end
 end
