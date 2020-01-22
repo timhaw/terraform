@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   # config.vm.synced_folder "/Users/timhaw/Dropbox/Source/Repos", "/Repos"
   config.vm.synced_folder "#{ENV['VAGRANT_HOME']}", "/var/terraform_home/", type: "rsync",
-  rsync__exclude: [".git*", "credentials*", "Terraform.code-workspace", "*.log", "Vagrantfile"]
+  rsync__exclude: [".git*", "credentials*", "Terraform.code-workspace", "*.log", "Vagrantfile", "Terraform.pem"]
   
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

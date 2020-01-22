@@ -4,3 +4,4 @@ credentials
 .vagrant
 *.log
 terraform.tfvars
+Terraform.pem

@@ -16,6 +16,10 @@ variable "PATH_TO_PUBLIC_KEY" {
   default = "id_rsa.pub"
 }
 
+variable "SSH_KEY_PAIR" {
+  default = "Terraform"
+}
+
 variable "AMIS" {
   type = map(string)
   default = {
