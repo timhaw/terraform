@@ -8,6 +8,7 @@ system("
     echo 'AWS_ACCESS_KEY = \"'$aws_access_key_id'\"' > terraform.tfvars
     echo 'AWS_SECRET_KEY = \"'$aws_secret_access_key'\"' >> terraform.tfvars
     export VAGRANT_HOME=`pwd`
+    rm -f credentials
   fi
 ")
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -80,8 +81,15 @@ Vagrant.configure("2") do |config|
   eval $(sed 's/[[:space:]]*=[[:space:]]\s*/=/g' /var/terraform_home/terraform.tfvars | sed 's/^/export /')
   printenv > environment.txt
 #<<COMMENT  
+    #
+    # Update Repository
+    #
     apt-get update &> /dev/null
     # apt-get install -y apache2
+    #
+    # Generate Public/Private Key Pair
+    #
+    sudo -u vagrant bash -c "ssh-keygen -f /home/vagrant/.ssh/id_rsa -q -N ''" 
     #
     # Install Terraform
     #
@@ -101,7 +109,6 @@ Vagrant.configure("2") do |config|
     chmod +x /usr/local/bin/kops
     apt-get install -y python3-pip &> /dev/null
     pip3 install --upgrade pip
-    sudo -u vagrant bash -c "ssh-keygen -f /home/vagrant/.ssh/id_rsa -q -N ''" 
     # 
     # Install AWS CLI
     #
@@ -134,6 +141,14 @@ Vagrant.configure("2") do |config|
     chown vagrant:vagrant skaffold-linux-amd64
     chmod +x skaffold-linux-amd64
     mv skaffold-linux-amd64 /usr/local/bin/skaffold
+    #
+    # Install Istio
+    #
+    wget -q https://github.com/istio/istio/releases/download/1.4.3/istio-1.4.3-linux.tar.gz
+    tar -xzvf istio-1.4.3-linux.tar.gz
+    chown -R vagrant:vagrant istio-1.4.3
+    cd istio-1.4.3
+    echo 'export PATH="$PATH:/home/vagrant/istio-1.4.3/bin"' >> /home/vagrant/.profile
     #
 #COMMENT
   SHELL

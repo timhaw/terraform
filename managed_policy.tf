@@ -1,17 +1,33 @@
-resource "aws_iam_policy" "example" {
-    name        = "example"
-    description = "A test policy"
+resource "aws_iam_policy" "jenkins" {
+    name        = "jenkins"
+    description = "A managed policy to allow the Jenkins EC2 instance to access AWS resources"
 
     policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Action": [
-                "ec2:Describe*"
-            ],
+            "Sid": "Statement01",
             "Effect": "Allow",
-            "Resource": "*"
+            "Action": [
+                "autoscaling:*",
+                "cloudformation:*",
+                "cloudwatch:*",
+                "ec2:*",
+                "elasticbeanstalk:*",
+                "elasticloadbalancing:*",
+                "iam:*",
+                "lambda:*",
+                "logs:*",
+                "route53:*",
+                "s3:*",
+                "secretsmanager:*",
+                "sqs:*",
+                "ssm:*"
+            ],
+            "Resource": [
+                "*"
+            ]
         }
     ]
 }
@@ -19,7 +35,7 @@ EOF
 
 }
 
-resource "aws_iam_role_policy_attachment" "example" {
-    role       = "${aws_iam_role.example.name}"
-    policy_arn = "${aws_iam_policy.example.arn}"
+resource "aws_iam_role_policy_attachment" "jenkins" {
+    role       = aws_iam_role.jenkins.name
+    policy_arn = aws_iam_policy.jenkins.arn
 }

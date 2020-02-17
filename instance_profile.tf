@@ -1,4 +1,4 @@
-resource "aws_iam_instance_profile" "example" {
-  name = "example"
-  role = aws_iam_role.example.name
+resource "aws_iam_instance_profile" "jenkins" {
+  name = "jenkins"
+  role = aws_iam_role.jenkins.name
 }

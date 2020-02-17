@@ -4,12 +4,26 @@ resource "aws_security_group" "allow_ssh" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    # SSH (change to whatever ports you need)
+    # SSH
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    # Please restrict your ingress to only necessary IPs and ports.
-    # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
+    cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
+  }
+  
+  ingress {
+    # Jenkins
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
+  }
+  
+  ingress {
+    # Semaphore
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
   }
 
