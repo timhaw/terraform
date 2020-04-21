@@ -1,4 +1,4 @@
-![Logo of the project](phabricator.png)
+![Logo of the project](./phabricator.png)
 
 # Phabricator
 > Phabricator is a suite of web-based software development collaboration tools, including the *Differential* code review tool, the *Diffusion* repository browser, the *Herald* change monitoring tool, the *Maniphest* bug tracker and the *Phriction* wiki. Phabricator integrates with Git, Mercurial, and Subversion. It is available as free software under the Apache License 2.0. Phabricator was originally developed as an internal tool at Facebook. Phabricator's principal developer is Evan Priestley. Priestley left Facebook to continue Phabricator's development in a new company called Phacility.
