@@ -1,11 +1,14 @@
 resource "aws_instance" "jenkins" {
   ami           = var.AMIS[var.AWS_REGION]
-  instance_type = "t3.small"
+  instance_type = "t2.micro"
   iam_instance_profile = aws_iam_instance_profile.jenkins.name
   subnet_id = aws_subnet.main-public-1.id
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   key_name = var.SSH_KEY_PAIR
   associate_public_ip_address = true
+  root_block_device {
+    volume_size = 40
+  }
   user_data = data.template_cloudinit_config.cloudinit-jenkins.rendered
 }
 

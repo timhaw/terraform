@@ -2,6 +2,7 @@
 !*.secret
 credentials
 .vagrant
+.ssh
 *.log
 terraform.tfvars
 Terraform.pem

@@ -23,9 +23,9 @@ variable "SSH_KEY_PAIR" {
 variable "AMIS" {
   type = map(string)
   default = {
-    eu-west-1 = "ami-0987ee37af7792903"
-    eu-west-2 = "ami-05945867d79b7d926"
-    eu-west-3 = "ami-00c60f4df93ff408e"
+    eu-west-1 = "ami-06ce3edf0cff21f07"
+    eu-west-2 = "ami-01a6e31ac994bbc09"
+    eu-west-3 = "ami-00077e3fed5089981"
   }
 }
 

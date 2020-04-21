@@ -149,6 +149,7 @@ Vagrant.configure("2") do |config|
     chown -R vagrant:vagrant istio-1.4.3
     cd istio-1.4.3
     echo 'export PATH="$PATH:/home/vagrant/istio-1.4.3/bin"' >> /home/vagrant/.profile
+    rm -f istio-1.4.3-linux.tar.gz
     #
 #COMMENT
   SHELL
